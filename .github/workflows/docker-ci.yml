@@ -1,0 +1,12 @@
+
+name: docker-ci
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-18.04 # linux required if you want to use docker
+    # Those steps are actions, which may run inside a container
+    - uses: actions/checkout@v1
+    - uses: ./.github/actions/my-action
+    - uses: docker://trailofbits/eth-security-toolbox:latest 
