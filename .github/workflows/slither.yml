@@ -45,7 +45,7 @@ jobs:
       run: slither --version
       
     - name: Show slither version
-      run: slither contracts/strategies/**/*.sol --print contract-summary
+      run: slither contracts/vaults/yVault.sol --print contract-summary
     - name: Commit files
       id: commit
       run: |
