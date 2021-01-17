@@ -1,18 +1,8 @@
 name: slither
 
 on:
-  push:
-    branches:
-    - master
-    - develop
-    paths:
-      - 'contracts/**' 
-  pull_request:
-    branches:
-    - master
-    - develop
-    branches: [ 'develop', 'ci/*' ]
-    paths:
+ push:
+     paths:
       - 'contracts/**' 
 
 jobs:
@@ -20,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1.4.4
+      - uses: actions/setup-node@2
       - uses: actions/setup-python@v2
       - name: Install truffle
         run:  |
