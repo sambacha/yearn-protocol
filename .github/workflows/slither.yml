@@ -1,10 +1,15 @@
 name: slither
 
+
 on:
   push:
-    paths:
-      - 'contracts/**' 
-
+    branches:
+    - master
+    - develop
+  pull_request:
+    branches:
+    - master
+    - develop
 
 jobs:
   slither:
