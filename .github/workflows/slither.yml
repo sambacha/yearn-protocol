@@ -27,7 +27,8 @@ jobs:
 
       - name: Install truffle
         run:  |
-          cd contracts
+          cd contracts/vaults
+          echo $PWD
           npm install truffle
       - name: Install Slither
         # use sudo as this is for CI and doesn't matter, just dont cache!
@@ -35,8 +36,7 @@ jobs:
         run: pip install slither-analyzer
       - name: Slither CI configuration
         run: |
-          mkdir -p output
-          git log -1 --format="%H"
+          mkdir -p output/
       - name: Slither Analysis
         shell: bash
         run: |
