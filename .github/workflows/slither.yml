@@ -29,7 +29,7 @@ jobs:
       - name: Install Slither
         # use sudo as this is for CI and doesn't matter, just dont cache!
         # ACTIONS_STEP_DEBUG=true
-        run: sudo pip3 install slither-analyzer
+        run: sudo -H pip3 install slither-analyzer
       - name: Slither CI configuration
         run: |
           mkdir -p output
