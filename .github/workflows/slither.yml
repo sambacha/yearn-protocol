@@ -2,10 +2,15 @@ name: slither
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+    - master
+    - develop
     paths:
       - 'contracts/**' 
   pull_request:
+    branches:
+    - master
+    - develop
     branches: [ 'develop', 'ci/*' ]
     paths:
       - 'contracts/**' 
