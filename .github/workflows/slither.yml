@@ -1,0 +1,55 @@
+name: slither
+
+
+on:
+  push:
+    branches:
+    - master
+    - develop
+  pull_request:
+    branches:
+    - master
+    - develop
+
+jobs:
+  slither:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+         node-version: '12.x'
+      - uses: actions/setup-python@v2
+        with:
+         python-version: '3.7.x'
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip setuptools wheel
+
+      - name: Install truffle
+        run:  |
+          cd contracts/vaults
+          echo $PWD
+          npm install truffle
+      - name: Install Slither
+        # use sudo as this is for CI and doesn't matter, just dont cache!
+        # ACTIONS_STEP_DEBUG=true
+        run: pip install slither-analyzer
+      - name: Slither CI configuration
+        run: |
+          mkdir -p output/
+      - name: Slither Analysis
+        shell: bash
+        run: |
+          slither ./contracts --filter-paths "openzeppelin|test" --exclude naming-convention >>output/slither_report.txt 2>&1 || true
+      - name: Slither Reporting
+        uses: actions/upload-artifact@v2
+        with:
+          name: slither-report
+          path: output/slither_report.txt
+      - name: Check status
+        shell: bash
+        run: |
+          FALSE_POSITIVE_WARNIGNS=7
+          FOUND_WARNINGS=`grep "\d+ result" -Po output/slither_report.txt | sed 's/ result//g'`
+          echo "Slither has found $FOUND_WARNINGS issues"
+          if [[ $FOUND_WARNINGS -gt $FALSE_POSITIVE_WARNIGNS ]]; then echo "$FOUND_WARNINGS issues exceeds limit" >&2; exit 1; fi
