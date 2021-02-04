@@ -2,8 +2,6 @@ name: Slither
 on:
   push:
 
-
-
 jobs:
   slither:
     name: Slither Analysis
@@ -20,12 +18,12 @@ jobs:
           python-version: 3.8
       - name: Cache pip
         uses: actions/cache@v2
-        with: null
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-          ${{ runner.os }}-
+        with: 
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
       - name: Install node dependencies
         run: yarn
       - name: Install slither
